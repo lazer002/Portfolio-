@@ -12,7 +12,7 @@ export default function Scene() {
     <Canvas camera={{ position: [0, 0, 8] }}>
       <ambientLight intensity={0.5} />
       <Environment preset="city" />
-
+  <fog attach="fog" args={['#000000', 1.5, 12]} />
       <MainModel />
       <Particles />
 

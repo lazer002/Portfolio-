@@ -3,42 +3,58 @@
 import Scene from '@/components/Scene'
 import SmoothScroll from '@/components/SmoothScroll'
 import Cursor from '@/components/Cursor'
+import Work from '@/components/Work'
 import { motion } from 'framer-motion'
 
 export default function Page() {
   return (
-    <main className="bg-black text-white">
+    <main id="container" className="h-[500vh] bg-black text-white">
       <SmoothScroll />
       <Cursor />
 
       {/* HERO */}
-      <section id="hero" className="h-screen relative">
+      <section id="hero" className="h-screen sticky top-0">
         <Scene />
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-7xl font-bold">INSANE</h1>
+ 
+      </section>
+
+      {/* 🧠 IDENTITY SECTION (NEW — IMPORTANT) */}
+      <section className="h-screen sticky top-0 flex items-center justify-center pointer-events-none">
+        <div className="text-center">
+
+          <motion.h1
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2 }}
+            className="text-[10vw] font-bold leading-none"
+          >
+            LAZER
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.7 }}
+            transition={{ delay: 0.3 }}
+            className="text-xl mt-4"
+          >
+            CREATIVE SOFTWARE ENGINEER
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.4 }}
+            transition={{ delay: 0.6 }}
+            className="text-sm mt-2"
+          >
+            aka Ajit
+          </motion.p>
+
         </div>
       </section>
 
-      {/* TEXT */}
-      <section className="h-screen flex items-center px-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-6xl font-bold"
-        >
-          CREATIVE DIGITAL EXPERIENCES
-        </motion.h2>
-      </section>
-
-      {/* WORK */}
-      <section className="h-[200vh]">
-        <div className="sticky top-0 flex gap-10 h-screen items-center px-10">
-          {[1,2,3].map(i => (
-            <div key={i} className="w-80 h-96 bg-white/10 rounded-2xl" />
-          ))}
-        </div>
-      </section>
+      {/* 💼 WORK */}
+      <Work />
     </main>
   )
 }
