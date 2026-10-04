@@ -1,0 +1,3600 @@
+# CYBERPUNK 3D PORTFOLIO — MASTER BUILD SCRIPT
+
+ROLE OF THIS DOCUMENT
+This document is an implementation specification for an AI coding agent.
+Do not treat it as a visual moodboard only.
+Every scene must be implemented as an actual interactive 3D experience.
+The portfolio must be driven by the engineer profile and projects supplied in the resume.
+Do not invent employment history, projects, metrics, clients, awards or technologies.
+Use illustrative technical data only when a visual animation requires sample payloads.
+
+# CORE CREATIVE DIRECTION
+The theme is CYBERPUNK, NOT SPACE.
+Do not create planets, galaxies, nebulae, star fields, astronauts or outer-space environments.
+The visual language should feel like a futuristic city, underground systems lab, neon data center and advanced interface combined.
+Use wet black surfaces, smoked glass, translucent polymer, brushed dark metal, holographic panels, cables, rails, terminals and architectural grids.
+The environment should feel physical and urban rather than cosmic.
+Use neon cyan, acid green, electric violet and controlled white as accent colors.
+Never use rainbow gradients.
+Never turn every object into glowing neon.
+Most surfaces should remain dark and restrained.
+Glow is reserved for active data, interaction states and important edges.
+
+# TECHNICAL REQUIREMENT
+Use Next.js App Router.
+Use TypeScript.
+Use React Three Fiber for WebGL.
+Use Drei for helpers and loaders.
+Use GSAP with ScrollTrigger for scene choreography.
+Use Framer Motion for DOM typography and interface overlays.
+Use GLSL shaders for particles, distortion, displacement and transition effects.
+Use react-three/postprocessing for bloom, depth of field and other post effects.
+Use Lenis for smooth scrolling if it integrates cleanly with ScrollTrigger.
+Use instanced rendering for repeated particles and repeated geometry.
+Use dynamic imports for heavy 3D scenes.
+Do not enable OrbitControls in production.
+The camera must be controlled by the experience.
+
+# IMPORTANT SCROLL RULE
+Do not build a normal page where the WebGL scene simply sits behind HTML sections.
+Scrolling must drive the 3D narrative.
+The page can still use native scroll position as the timeline driver, but the visual result must feel like a sequence of cinematic scenes.
+Each scene owns a normalized progress range.
+GSAP ScrollTrigger controls scene progress.
+Camera, object transforms, particles, postprocessing and DOM typography must all respond to the same scene progress.
+Use power3.inOut, power2.inOut, expo.out and custom cubic-bezier easing.
+Avoid linear easing for visible object motion.
+
+# CAMERA RULES
+Use one main PerspectiveCamera for the cinematic experience.
+Use secondary cameras only when technically necessary.
+Camera movement must be smooth and damped.
+Do not snap the camera between scenes.
+Use small camera shake only during major scene transitions.
+Never use camera shake continuously.
+Camera shake should be deterministic and subtle.
+
+# CURSOR RULES
+Create a custom DOM cursor.
+The default browser cursor should be hidden on desktop.
+The cursor has an inner dot and an outer ring.
+The outer ring expands over interactive objects.
+The ring changes shape slightly when hovering a 3D interactive object.
+The cursor should not become so large that it blocks content.
+Use raycasting for 3D hover detection.
+Use throttled pointer calculations where necessary.
+
+# PARTICLE RULES
+Particles are not decorative stars.
+They represent data, electricity, dust, signal fragments and system activity.
+Use shader-based particles.
+Use instanced or GPU-friendly rendering.
+Particles should have depth fade.
+Particles should have soft glow.
+Particles should respond to cursor proximity.
+Particles should react to scene progress.
+At high scene intensity, particles should accelerate and spread.
+At calm moments, particles should regroup into structures.
+
+# MATERIAL RULES
+Primary surfaces: dark smoked glass.
+Secondary surfaces: black anodized metal.
+Interactive edges: controlled neon emissive material.
+Glass objects should use MeshPhysicalMaterial where appropriate.
+Use transmission carefully; do not make every surface fully transparent.
+Use roughness variation to create realistic glass.
+Use subtle iridescence on hero objects only.
+Chromatic aberration should be restrained.
+
+# LIGHTING RULES
+Use a dark environment.
+Use a strong key light only when needed.
+Use rim lights to separate black objects from the background.
+Use emissive practical lights inside machines.
+Use local lights near active data paths.
+Do not wash the entire scene in blue.
+Allow large regions of near-black negative space.
+
+# TYPOGRAPHY RULES
+Typography must be large and confident.
+Use a modern grotesk or geometric sans-serif.
+Headlines should feel architectural.
+Use small uppercase technical labels for system metadata.
+Avoid paragraphs floating inside 3D space.
+Keep detailed text in readable DOM overlays.
+3D text should be used sparingly.
+
+# TRANSITION RULES
+Every scene must have an identifiable transition mechanism.
+Possible mechanisms include shutter, data tunnel, folding panel, disintegration, scanline wipe, mechanical rotation, glass fracture and liquid displacement.
+Do not use the same transition for every scene.
+Transitions should be driven by scene progress.
+Transitions must preserve visual continuity.
+
+# RESPONSIVE RULES
+Desktop receives the full cinematic experience.
+Tablet reduces particle count and depth complexity.
+Mobile keeps the storytelling but simplifies expensive effects.
+On mobile, cursor interactions become touch interactions.
+Do not render thousands of expensive individual objects on low-power devices.
+Preserve the scene hierarchy even when reducing detail.
+
+# ACCESSIBILITY
+Provide readable HTML equivalents for important text.
+Do not place essential information only inside WebGL.
+Interactive project links must remain keyboard accessible.
+Respect prefers-reduced-motion.
+When reduced motion is enabled, keep scene changes but remove aggressive camera and particle motion.
+
+# PERFORMANCE
+Use React.memo for static 3D components where useful.
+Avoid recreating geometries and materials every render.
+Use useMemo for expensive geometry.
+Use useRef for animation targets.
+Use GSAP contexts and clean them up.
+Kill ScrollTriggers on component unmount.
+Dispose geometries, materials and textures when appropriate.
+Lazy load heavy project media.
+Use compressed textures.
+Prefer video textures only where they materially improve a project showcase.
+Use requestAnimationFrame only where it cannot be replaced by the render loop.
+
+# RESUME CONTENT SOURCE
+Professional profile: backend-focused Software Engineer with 4 years of experience building and scaling Node.js services for high-volume e-commerce and enterprise platforms.
+Core specialization: Shopify and ERP integrations, event-driven order processing, AWS SQS FIFO queues, REST and GraphQL APIs, production debugging, order/return/fulfillment workflows.
+Primary current experience: Software Engineer at Nicobar Design Pvt. Ltd., March 2025 to Present.
+Previous experience: Software Developer at Plexify Global Ind Pvt Ltd, October 2024 to February 2025.
+Previous experience: Node.js Developer at Manthan IT Solutions, June 2023 to October 2024.
+Certification period: Full Stack Developer certification, December 2022 to June 2023.
+
+
+# SCENE 01 — THE NEON CORE — HERO / IDENTITY
+
+SCENE PURPOSE: Introduce Ajit as a backend-focused software engineer through one central interactive cyberpunk machine.
+
+EXACT CONTENT TO SHOW:
+- AJIT KUMAR
+- SOFTWARE ENGINEER
+- BACKEND • MICROSERVICES • E-COMMERCE • EVENT-DRIVEN SYSTEMS
+- 4+ YEARS EXPERIENCE
+
+PRIMARY 3D OBJECT: A large suspended cybernetic core made from a transparent glass-metal torus, six rotating mechanical rings, inner luminous circuitry, and a small floating identity glyph. This is the main hero object.
+
+CURSOR / HOVER BEHAVIOR: The object must react continuously to the pointer. Pointer proximity bends nearby particles, rotates the nearest ring toward the pointer, changes emissive intensity, and causes tiny mechanical components to unlock and relock.
+
+SCROLL BEHAVIOR: At the first scroll movement the core rotates 25 degrees on Y, then 18 degrees on X. With continued scrolling it moves toward the camera, grows from 1.0 to 1.45 scale, and passes partially through the camera plane before dissolving into the next scene.
+
+ANIMATION / MOTION: Use layered cinematic motion with non-linear easing. The main object should never remain completely static.
+
+SCENE TRANSITION: Use a digital shutter made from thin horizontal scanlines. The center core becomes overexposed for a fraction of a second, then the screen displaces sideways with a noise shader.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 02 — THE ENGINEER PROFILE — HUMAN + SYSTEM
+
+SCENE PURPOSE: Show the person behind the systems without turning the section into a conventional resume card.
+
+EXACT CONTENT TO SHOW:
+- BACKEND-FOCUSED SOFTWARE ENGINEER
+- Node.js • Express.js • Moleculer
+- REST • GraphQL • Microservices
+- Production debugging • scalable systems • integrations
+
+PRIMARY 3D OBJECT: Create a giant vertical cyberpunk identification panel floating in front of a dark architectural grid. Around it, construct small 3D service modules representing API, database, queue, cache, webhook, and worker.
+
+CURSOR / HOVER BEHAVIOR: Hovering a module pulls it forward by 0.25 world units and draws a thin luminous connection from that module to the main identity panel. Moving away lets it return with spring easing.
+
+SCROLL BEHAVIOR: As the section enters, the camera travels from a three-quarter angle to a frontal view. The profile panel separates into layers: title, role, architecture, and capability. Each layer moves at a different depth.
+
+ANIMATION / MOTION: Use layered cinematic motion with non-linear easing. The main object should never remain completely static.
+
+SCENE TRANSITION: The profile panel folds into a vertical data blade. The blade rotates 90 degrees and becomes the first node of the architecture scene.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 03 — MICROSERVICE CITY — ARCHITECTURE
+
+SCENE PURPOSE: Turn backend architecture skills into a visible cyberpunk city of services.
+
+EXACT CONTENT TO SHOW:
+- MICROSERVICES
+- NODE.JS
+- EXPRESS.JS
+- MOLECULER
+- REST APIs
+- GRAPHQL
+- ASYNCHRONOUS PROCESSING
+- WEBHOOKS
+- IDEMPOTENCY
+- RETRY WORKFLOWS
+
+PRIMARY 3D OBJECT: Build a futuristic miniature city where each tower represents a service. Towers are black glass with translucent interiors. Service names appear as tiny holographic labels, never as flat cards.
+
+CURSOR / HOVER BEHAVIOR: Pointer movement creates a local magnetic field. Nearby service towers tilt toward the pointer and brighten. Connections between related services become thicker when the pointer crosses them.
+
+SCROLL BEHAVIOR: Scroll moves the camera through the city rather than simply moving the DOM. The camera starts above the city, descends between service towers, then travels horizontally through the internal network.
+
+ANIMATION / MOTION: Requests are represented by small luminous packets. Packets travel from API gateway to services, then to cache/database/queue nodes. No packet should move linearly; use curved bezier paths and power3.inOut easing.
+
+SCENE TRANSITION: The camera follows one order packet. It accelerates through a tunnel and exits directly into the commerce system.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 04 — COMMERCE MACHINE — NICOBAR PLATFORM
+
+SCENE PURPOSE: Make the strongest professional project the flagship technical story.
+
+EXACT CONTENT TO SHOW:
+- NICOBAR E-COMMERCE PLATFORM
+- CHECKOUT
+- FULFILLMENT
+- CANCELLATION
+- RETURNS
+- EXCHANGES
+- GIFT CARDS
+- SHOPIFY
+- ERP
+- REDIS
+- MONGODB
+
+PRIMARY 3D OBJECT: Create a huge cyberpunk order-processing machine. It contains a storefront gateway, order core, inventory chamber, fulfillment rail, return chamber, exchange chamber, gift-card vault, Shopify gateway, ERP gateway, Redis cache and MongoDB data vault.
+
+CURSOR / HOVER BEHAVIOR: Hover over a subsystem and isolate it. Dim every unrelated subsystem, enlarge the selected module, and show animated data packets entering and leaving it.
+
+SCROLL BEHAVIOR: Scrolling starts an order journey. The order packet enters checkout, moves to order processing, splits into inventory and payment-style internal routes, reaches fulfillment, and later branches into cancellation, return, exchange, and settlement paths.
+
+ANIMATION / MOTION: Each stage must have a different physical metaphor. Checkout is a scanner gate. Fulfillment is a conveyor. Returns are reverse-moving packets. Exchange is a packet that transforms into a replacement packet. Gift cards are encrypted chips.
+
+SCENE TRANSITION: At the end of the order lifecycle, the packet becomes a Shopify webhook event and launches into the next scene.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 05 — EVENT RAIL — AWS SQS / RETRIES / DLQ
+
+SCENE PURPOSE: Visually explain event-driven order processing, ordered delivery, deduplication, delay queues, retry/backoff and dead-letter handling.
+
+EXACT CONTENT TO SHOW:
+- EVENT-DRIVEN PROCESSING
+- AWS SQS
+- FIFO QUEUES
+- ORDERED DELIVERY
+- DEDUPLICATION
+- DELAY QUEUES
+- RETRY
+- BACKOFF
+- DEAD-LETTER QUEUES
+
+PRIMARY 3D OBJECT: Build multiple transparent cyberpunk queue rails. Each rail is a physical tunnel containing moving event capsules. Use different rail colors only for meaning: primary events, retries, and failures.
+
+CURSOR / HOVER BEHAVIOR: Hovering a message freezes it for inspection. Display a compact holographic diagnostic overlay with event type, sequence number, retry count and state. Do not invent business values; use illustrative labels.
+
+SCROLL BEHAVIOR: The first scroll sends an event through the FIFO rail. A duplicate event appears and is rejected by a deduplication gate. A failed event enters a delay chamber, waits, then retries. A repeatedly failing event eventually moves into the dead-letter chamber.
+
+ANIMATION / MOTION: Backoff must be represented physically: every retry takes longer and the capsule travels through a larger loop before returning to the main rail.
+
+SCENE TRANSITION: The final successful event exits the queue as a signed webhook packet and enters the Shopify integration scene.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 06 — SHOPIFY NEXUS — API + WEBHOOKS
+
+SCENE PURPOSE: Show Shopify Admin REST/GraphQL and webhook integration as a living synchronization system.
+
+EXACT CONTENT TO SHOW:
+- SHOPIFY ADMIN API
+- REST
+- GRAPHQL
+- WEBHOOKS
+- SIGNATURE VERIFICATION
+- IDEMPOTENT HANDLERS
+- RATE-LIMIT AWARE REQUESTS
+- PRODUCT
+- INVENTORY
+- ORDER
+- GIFT CARD
+
+PRIMARY 3D OBJECT: Create a giant cyberpunk commerce gateway with a central hexagonal API core. REST requests use one visual path and GraphQL requests use another. Webhooks enter from the outside as signed data capsules.
+
+CURSOR / HOVER BEHAVIOR: Hover over REST or GraphQL changes the camera focus to that route. Hover over a webhook shows a signature-verification gate. Moving away returns the scene to its full-system composition.
+
+SCROLL BEHAVIOR: Scroll causes product, inventory, order and gift-card events to travel through the gateway. A webhook reaches signature verification, passes into an idempotency lock, then enters the event queue.
+
+ANIMATION / MOTION: Show rate-limit awareness as a traffic meter. When the virtual request rate increases, the system automatically spaces requests instead of allowing chaotic flooding.
+
+SCENE TRANSITION: The Shopify gateway rotates and becomes one side of a two-system bridge. The opposite side materializes as an ERP terminal.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 07 — ERP BRIDGE — SOAP / CONTRACTS / SYNCHRONIZATION
+
+SCENE PURPOSE: Visualize enterprise integration and SOAP-based ERP communication.
+
+EXACT CONTENT TO SHOW:
+- ERP INTEGRATION
+- SOAP APIs
+- SOAP UI
+- POSTMAN
+- PAYLOAD DEBUGGING
+- ORDER STATUS SYNCHRONIZATION
+
+PRIMARY 3D OBJECT: Build two enormous cyberpunk terminals facing each other across a deep gap. One is the commerce side; the other is the ERP side. Between them is a flexible data bridge made from animated XML-like ribbons.
+
+CURSOR / HOVER BEHAVIOR: Pointer movement bends the bridge toward the cursor. Hovering the bridge reveals a transparent payload inspector. The payload should be abstract and safe: <Order>, <Status>, <Items>, <Reference>.
+
+SCROLL BEHAVIOR: Scroll moves the camera across the bridge. During the movement, one payload travels from commerce to ERP and a response payload returns in the opposite direction.
+
+ANIMATION / MOTION: Payload debugging is represented by a scanning beam that travels through the data ribbon and briefly highlights malformed-looking segments before showing a corrected synchronized packet.
+
+SCENE TRANSITION: The bridge collapses into a stream of data fragments that fall downward into a database landscape.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 08 — DATA VAULT — MONGODB / MYSQL / ORACLE / REDIS
+
+SCENE PURPOSE: Show database breadth without using ordinary database logos as decoration.
+
+EXACT CONTENT TO SHOW:
+- MONGODB
+- MYSQL
+- ORACLEDB
+- REDIS
+- CACHING
+- WORKFLOW STATE
+- TRANSACTIONAL DATA
+- QUERY PERFORMANCE
+
+PRIMARY 3D OBJECT: Create four distinct cyberpunk data vaults. MongoDB is a flexible cluster of floating document shards. MySQL is an organized relational grid. OracleDB is a massive enterprise vault. Redis is a fast glowing memory layer positioned closest to the active request path.
+
+CURSOR / HOVER BEHAVIOR: Hovering a vault causes the camera to orbit that vault and reveals a stylized internal structure. Redis should respond fastest, with a short visual path from request to response.
+
+SCROLL BEHAVIOR: A request enters the scene. It first checks Redis. If the data is unavailable, it travels to the persistent database layer. The response returns and populates the cache.
+
+ANIMATION / MOTION: Use thousands of tiny data particles inside the vaults, but keep the scene readable. Data should look like structured information, not stars.
+
+SCENE TRANSITION: All four vaults compress into one data cube. The cube becomes the screen of a mobile device in the next scene.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 09 — PRODUCT GALLERY — REAL PROJECTS
+
+SCENE PURPOSE: Show actual portfolio projects as interactive cinematic objects.
+
+EXACT CONTENT TO SHOW:
+- NICOBAR E-COMMERCE PLATFORM
+- SHOPIFY INTEGRATION APP
+- PLEXIFY WEALTH APP
+- HUMAN RESOURCE MANAGEMENT SYSTEM
+- HONDA HMSI WEB AND APP
+- ZORO.PC
+- URBAN-ZORO
+
+PRIMARY 3D OBJECT: Create a long horizontal cyberpunk gallery containing large floating project slabs. Each slab is a rounded glass-metal rectangle with an embedded image/video area, project title, technology tags and a small project number.
+
+CURSOR / HOVER BEHAVIOR: Hover causes the card to tilt toward the cursor, move forward in Z, and reveal its technical stack. Add a subtle chromatic split around the edges. Never use an excessive glitch that makes the project unreadable.
+
+SCROLL BEHAVIOR: Vertical page scrolling drives horizontal camera movement. The visitor should feel as if they are walking through a physical project archive.
+
+ANIMATION / MOTION: Cards must not all animate identically. The flagship commerce projects can have stronger motion; supporting projects can use quieter rotations and depth shifts.
+
+SCENE TRANSITION: The gallery reaches its final project slab. The slab opens like a mechanical door and reveals a mobile device floating inside.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 10 — MOBILE WEALTH NODE — PLEXIFY
+
+SCENE PURPOSE: Show React Native, financial product interfaces, wealth management and the Hedera blockchain work from the resume.
+
+EXACT CONTENT TO SHOW:
+- PLEXIFY WEALTH APP
+- REACT NATIVE
+- INSURANCE
+- BONDS
+- PROPERTY
+- USER ASSETS
+- WEALTH MANAGEMENT
+- WILL GENERATION
+- REALM
+- HEDERA BLOCKCHAIN
+
+PRIMARY 3D OBJECT: Build a large futuristic mobile device floating vertically in front of the camera. The device has layered glass UI panels extending into 3D space. Behind it, create a blockchain lattice of connected nodes.
+
+CURSOR / HOVER BEHAVIOR: Move the cursor over different UI layers. The selected layer rises toward the viewer while the other layers move backward. Cursor movement should subtly rotate the device.
+
+SCROLL BEHAVIOR: The device rotates from portrait to a slight perspective angle. The interface layers separate, revealing assets, liabilities, property, insurance and will-generation concepts as visual modules.
+
+ANIMATION / MOTION: The blockchain lattice should remain secondary. Nodes connect and pulse only when data moves between the app and the secure-data layer.
+
+SCENE TRANSITION: The blockchain lattice expands until it fills the viewport, then its nodes rearrange into a role-based access hierarchy.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 11 — ACCESS GRID — HRMS + HONDA HMSI
+
+SCENE PURPOSE: Represent role-based access, dynamic routing, large user hierarchies and enterprise workflows.
+
+EXACT CONTENT TO SHOW:
+- HR MANAGEMENT SYSTEM
+- EMPLOYEE
+- MANAGER
+- ADMIN
+- HR
+- HONDA HMSI
+- ORACLEDB
+- DYNAMIC ROUTING
+- MULTI-LEVEL LOGIN HIERARCHY
+
+PRIMARY 3D OBJECT: Create a vertical cyberpunk access tower. Four major levels represent Employee, Manager, HR and Admin. Thousands of small user nodes sit below the hierarchy. A separate enterprise tower represents the Honda HMSI system.
+
+CURSOR / HOVER BEHAVIOR: Hovering a role level highlights only the permissions and routes belonging to that level. The selected level becomes physically closer while unauthorized routes fade into transparent wireframes.
+
+SCROLL BEHAVIOR: The camera climbs the hierarchy. Each level unlocks another layer of the tower. At the top, the entire system becomes visible as a structured enterprise network.
+
+ANIMATION / MOTION: Use smooth data routing lines to show how a user request travels through authentication, role resolution, routing and database access.
+
+SCENE TRANSITION: The hierarchy grid fractures into dozens of diagnostic windows, beginning the production debugging scene.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 12 — PRODUCTION CONTROL ROOM — DEBUGGING
+
+SCENE PURPOSE: Show production debugging, logs, API payload tracing, database inspection and incident resolution as an interactive investigation.
+
+EXACT CONTENT TO SHOW:
+- PRODUCTION DEBUGGING
+- LOG ANALYSIS
+- API PAYLOAD TRACING
+- DATABASE RECORDS
+- QUEUE BEHAVIOR
+- UAT INCIDENTS
+- ROOT-CAUSE ANALYSIS
+- PRODUCTION SAFEGUARDS
+
+PRIMARY 3D OBJECT: Build a dark cyberpunk control room made from floating translucent diagnostic panels. A central failed request is represented as a red data packet frozen in space.
+
+CURSOR / HOVER BEHAVIOR: The cursor acts as an investigation scanner. Moving over a panel brings it forward and increases readability. Clicking or hovering the failed packet opens a chain showing API request → service → queue → database → failure point.
+
+SCROLL BEHAVIOR: Scroll advances the investigation step by step. First reveal the log, then the API payload, then the queue state, then the database record, then the root cause, then the corrected workflow.
+
+ANIMATION / MOTION: Do not fabricate specific incidents from the resume. Use clearly labeled illustrative diagnostic data. The visual story should demonstrate the debugging method rather than claim a specific production outage.
+
+SCENE TRANSITION: Once the issue is resolved, the red packet turns into a stable green/white signal and travels toward the final skills matrix.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 13 — STACK MATRIX — COMPLETE TECHNICAL DNA
+
+SCENE PURPOSE: Present the complete technical skill set as an interactive cyberpunk system map.
+
+EXACT CONTENT TO SHOW:
+- NODE.JS
+- EXPRESS.JS
+- MOLECULER
+- GRAPHQL
+- REST
+- PYTHON
+- JAVASCRIPT
+- MONGODB
+- MYSQL
+- ORACLEDB
+- REDIS
+- AWS SQS
+- DOCKER
+- GIT
+- REACT
+- REACT NATIVE
+- GSAP
+- TAILWIND CSS
+- BOOTSTRAP
+- JQUERY
+- AJAX
+- POSTMAN
+- SOAP UI
+- SENDGRID
+- MOENGAGE
+- FIREBASE
+- SOCKET.IO
+- AGILE/SCRUM
+
+PRIMARY 3D OBJECT: Create a massive 3D neural matrix. Each skill is a physical glass-metal tile connected to related technologies. Backend technologies form the central cluster, integrations and messaging form the middle ring, frontend and tools form outer rings.
+
+CURSOR / HOVER BEHAVIOR: Hover a skill and dynamically illuminate its relationships. Hover Node.js, for example, should reveal nearby Express, Moleculer, REST, GraphQL and service-processing nodes.
+
+SCROLL BEHAVIOR: The camera moves around the matrix while the skill clusters rotate slowly. The user should feel that the entire portfolio is one connected technical system.
+
+ANIMATION / MOTION: Connections should use curved lines and flowing packets. Avoid a flat spider-web appearance.
+
+SCENE TRANSITION: The matrix compresses into one luminous geometric core that becomes the final contact object.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# SCENE 14 — THE CORE — CONTACT / CLOSING
+
+SCENE PURPOSE: End the experience with a calm, premium cyberpunk identity rather than another busy technical diagram.
+
+EXACT CONTENT TO SHOW:
+- AJIT KUMAR
+- SOFTWARE ENGINEER
+- BUILDING SCALABLE DIGITAL SYSTEMS
+- LINKEDIN
+- GITHUB
+- EMAIL
+
+PRIMARY 3D OBJECT: Return to a refined version of the hero core. It should now contain small fragments from every previous scene: service nodes, queue capsules, database shards, API ribbons, project panels and skill tiles.
+
+CURSOR / HOVER BEHAVIOR: Cursor movement causes the final core to subtly follow the pointer. Hovering contact actions causes the core to open a small portal-like ring around the selected action.
+
+SCROLL BEHAVIOR: Very little movement remains. The camera slowly pulls backward, revealing the complete cyberpunk environment and all major system fragments orbiting the core.
+
+ANIMATION / MOTION: Use layered cinematic motion with non-linear easing. The main object should never remain completely static.
+
+SCENE TRANSITION: No aggressive glitch. Finish with a slow controlled fade, subtle grain, and the final identity remaining visible.
+
+SCENE IMPLEMENTATION CHECKLIST:
+1. Create the scene root as an isolated React Three Fiber component.
+2. Create reusable geometry and materials outside the render loop where possible.
+3. Register the scene with the global scroll timeline.
+4. Give the scene a normalized progress value from 0 to 1.
+5. Map camera position and look-at target to progress.
+6. Map primary object rotation to progress.
+7. Map primary object scale to progress.
+8. Map particle intensity to progress.
+9. Map DOM text opacity to progress.
+10. Map DOM text vertical displacement to progress.
+11. Map postprocessing intensity to progress.
+12. Add a unique entrance animation.
+13. Add a unique exit animation.
+14. Add desktop cursor interaction.
+15. Add touch-safe behavior.
+16. Add reduced-motion behavior.
+17. Ensure the scene can be unmounted without leaking GSAP timelines.
+18. Ensure textures and geometries are disposed when appropriate.
+19. Ensure text remains readable at normal viewing distance.
+20. Test the scene independently before connecting it to the master timeline.
+
+DO NOT:
+- Do not turn this scene into a normal 2D section.
+- Do not use generic floating spheres as the main visual.
+- Do not fill the entire viewport with uncontrolled particles.
+- Do not use random animation without a visual purpose.
+- Do not invent resume claims.
+- Do not use space imagery.
+- Do not use excessive glitch effects.
+- Do not make every object glow.
+
+
+# MASTER SCROLL TIMELINE
+
+- Create one master GSAP timeline for the portfolio.
+- Each scene receives a fixed scroll interval rather than competing for the same ScrollTrigger.
+- Scene progress must be deterministic from scroll position.
+- When scene progress is 0 the scene is in its entrance state.
+- When scene progress is 0.5 the scene is fully readable and interactive.
+- When scene progress is 1 the scene is prepared for transition.
+- Do not let independent animation loops fight GSAP-controlled transforms.
+- Idle animation may run only on properties that are not currently owned by the scroll timeline.
+- During active scrolling, blend idle rotation into scroll rotation rather than abruptly replacing it.
+- When scrolling stops, return gradually to idle motion.
+
+# FRAMER MOTION DOM LAYER
+
+- Use Framer Motion for large headings, labels, buttons and project metadata.
+- DOM text must move independently in depth illusion using translateY, scale and opacity.
+- Do not attempt to render all typography inside WebGL.
+- Use AnimatePresence only for UI elements that genuinely enter and leave.
+- Use viewport-safe typography sizes.
+- Keep the primary heading visible long enough for the visitor to understand the section.
+- Use staggered children only for grouped technical labels.
+- Avoid exaggerated bounce animations.
+
+# GLSL TRANSITIONS
+
+- Create a reusable fullscreen transition shader.
+- The shader must support progress from 0 to 1.
+- Include procedural noise.
+- Include directional displacement.
+- Include scanline modulation.
+- Include subtle RGB channel offset.
+- Expose intensity as a uniform.
+- Do not make the effect permanently active.
+- Use the shader only during scene boundaries.
+- Keep the final image readable before the transition reaches full intensity.
+
+# CYBERPUNK ENVIRONMENT
+
+- Use architectural geometry rather than outer-space geometry.
+- Add distant buildings, conduits, cables, vents, panels and illuminated signage as background silhouettes.
+- Keep background details low-poly or instanced to protect performance.
+- Use fog sparingly to create depth.
+- Use wet reflective surfaces where appropriate.
+- Use subtle scanlines and grain over the final composition.
+- Use small animated warning indicators as environmental details.
+- Do not create a dystopian city that distracts from the portfolio content.
+- The environment is supporting art direction, not the main subject.
+
+# FINAL QUALITY BAR
+
+- The website should feel like one continuous interactive film.
+- A visitor should understand that the central subject is an engineer and his systems work.
+- The technical content must remain legible and truthful.
+- Every major animation must communicate hierarchy, architecture, workflow or interaction.
+- Avoid template-like portfolio layouts.
+- Avoid generic neon cyberpunk clichés when they do not support the engineering story.
+- Prefer physical metaphors: rails, bridges, vaults, machines, terminals, access towers, control rooms and data cores.
+- Every scene must have a clear beginning, middle and end.
+- Every scene must visually hand off its main object or data signal to the next scene.
+- The final build should prioritize polish and consistency over adding unnecessary effects.
+
+# SCENE 01 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 02 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 03 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 04 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 05 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 06 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 07 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 08 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 09 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 10 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 11 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 12 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 13 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+# SCENE 14 — STATE MACHINE
+
+STATE A — PRELOAD:
+Load only the assets required for this scene and its immediate predecessor.
+Keep the scene invisible while assets initialize.
+Do not block the entire application on optional project media.
+
+STATE B — ENTER:
+Start from a deliberately composed state rather than an arbitrary hidden state.
+Bring the camera into position with exponential damping.
+Fade the scene environment in before the primary object reaches full brightness.
+Reveal the main title after the main 3D silhouette is recognizable.
+
+STATE C — INTERACTIVE:
+Enable raycasting and cursor effects.
+Enable hover reactions.
+Keep interaction responses local to the object under the pointer.
+Do not make unrelated objects move excessively when one object is hovered.
+
+STATE D — SCROLLING:
+GSAP becomes the primary owner of scene progression.
+Blend idle motion into scroll motion.
+Increase motion energy only where the storyboard specifies it.
+Never make scrolling feel like a slideshow of unrelated animations.
+
+STATE E — EXIT:
+Disable expensive interaction effects when the scene leaves the active range.
+Reduce particle count or intensity when the scene is far outside the viewport.
+Finish the scene in a state that visually connects to the next scene.
+
+STATE F — REDUCED MOTION:
+Disable camera shake.
+Reduce particle velocity.
+Replace major object travel with controlled fades and small rotations.
+Keep all text and project information available.
+
+============================================================
+AJIT KUMAR — RESUME-DRIVEN PRODUCTION DATA
+============================================================
+
+NAME: AJIT KUMAR
+TITLE: Backend-focused Software Engineer
+EXPERIENCE: 4 years
+LOCATION: New Delhi, India
+
+PROFILE STORY
+The portfolio must communicate a backend-focused engineer who builds and scales Node.js services for high-volume e-commerce and enterprise platforms. The documented specialization includes Shopify and ERP integrations, event-driven order processing with AWS SQS FIFO queues, REST and GraphQL API development, production debugging, and business-critical order/return/fulfillment workflows.
+
+TECHNICAL SKILLS
+Backend: Node.js, Express.js, Moleculer (Microservices), REST APIs, GraphQL, JavaScript (ES6+), Python
+Architecture: Microservices, Event-Driven Architecture, Asynchronous Processing, Webhooks, Idempotency, Retry Workflows
+E-commerce: Shopify, Shopify Admin API (REST and GraphQL), Shopify Apps, Order Management, Returns and Exchanges, Gift Cards
+Integrations: ERP Integration, SOAP APIs, SOAP UI, Postman, API Testing, SendGrid, MoEngage, Firebase
+Cloud and Messaging: AWS SQS, FIFO Queues, Dead-Letter Queues, Queue Processing, Redis, Socket.io
+Databases: MongoDB, MySQL, OracleDB, Redis
+Frontend: React.js, React Native, HTML5, CSS3, Tailwind CSS, Bootstrap, GSAP, jQuery, AJAX
+Tools and Practices: Git, GitHub, Docker, Postman, SOAP UI, Agile/Scrum, Log Analysis, Production Debugging
+
+============================================================
+SCENE 01 — HERO / AJIT KUMAR
+============================================================
+
+WHAT THIS SCENE IS FOR
+This is the visitor's first five seconds. It must immediately communicate that this is Ajit Kumar's portfolio and that he is a software engineer. Do not begin with a generic cyberpunk city. Begin with one premium object that feels important.
+
+WHAT THE VISITOR SEES
+A black reflective floor. Almost-black background. A suspended circular cybernetic core in the exact center. The core is built from smoked glass, black metal and thin emissive edge lines. Inside the ring is a smaller rotating mechanical aperture. Behind it are a few blurred architectural shapes.
+
+TEXT
+AJIT KUMAR
+SOFTWARE ENGINEER
+BACKEND • MICROSERVICES • E-COMMERCE
+4 YEARS EXPERIENCE
+
+DO NOT SHOW ALL SKILLS HERE.
+The hero must remain visually clean.
+
+OBJECT BEHAVIOR
+The core rotates very slowly around Y while the inner mechanism rotates at a different speed. A tiny vertical identity plate floats beside the core. It contains the role.
+
+CURSOR
+Move the pointer left: the core tilts slightly left.
+Move the pointer right: the core tilts slightly right.
+Move the pointer up: the camera target rises a little.
+Move the pointer down: the camera target lowers a little.
+Move close to the ring: nearby particles are repelled and the glass edge becomes brighter.
+Move away: everything returns smoothly.
+
+SCROLL
+First 10 percent: camera begins approaching.
+10–30 percent: outer ring rotates approximately one quarter turn.
+30–50 percent: inner mechanism separates into three depth layers.
+50–70 percent: camera moves through the ring opening.
+70–100 percent: the ring stretches into a tunnel and becomes the entrance to the profile scene.
+
+TRANSITION
+Do not hard-cut. Use a directional noise displacement. The circular ring becomes the circular outline of the next scene's profile terminal.
+
+============================================================
+SCENE 02 — PROFILE / ABOUT
+============================================================
+
+PURPOSE
+Explain who Ajit is before showing detailed work.
+
+VISUAL
+A large vertical smoked-glass terminal floats in front of the camera. Behind it are six small physical system modules: API, SERVICES, QUEUE, CACHE, DATABASE, INTEGRATION.
+
+CONTENT
+Backend-focused Software Engineer
+4 years experience
+High-volume e-commerce
+Enterprise platforms
+Shopify and ERP integrations
+Event-driven order processing
+REST and GraphQL
+Production debugging
+
+INTERACTION
+Hover SERVICES: Node.js and Moleculer labels appear.
+Hover QUEUE: AWS SQS/FIFO labels appear.
+Hover CACHE: Redis appears.
+Hover DATABASE: MongoDB/MySQL/OracleDB appear.
+Hover INTEGRATION: Shopify/ERP/SOAP appear.
+Hover API: REST/GraphQL appear.
+
+IMPORTANT
+These are resume-supported relationships. Do not invent additional architecture.
+
+SCROLL
+Camera starts at three-quarter angle and moves to frontal. The six modules spread apart to form the career timeline rails.
+
+============================================================
+SCENE 03 — EXPERIENCE TIMELINE
+============================================================
+
+PURPOSE
+Show the actual professional progression.
+
+STATIONS
+1. NICOBAR DESIGN PVT. LTD. — SOFTWARE ENGINEER — MARCH 2025 TO PRESENT
+2. PLEXIFY GLOBAL IND PVT LTD — SOFTWARE DEVELOPER — OCTOBER 2024 TO FEBRUARY 2025
+3. MANTHAN IT SOLUTIONS — NODE.JS DEVELOPER — JUNE 2023 TO OCTOBER 2024
+4. VSIT.IN — FULL-STACK DEVELOPER CERTIFICATION — DECEMBER 2022 TO JUNE 2023
+
+VISUAL
+Build a long cyberpunk transit rail. Each station is a physical monolith. The camera moves along the rail as the visitor scrolls.
+
+NICOBAR STATION
+Show small labels for Node.js, Moleculer, Shopify, AWS SQS, Redis, MongoDB and ERP.
+
+PLEXIFY STATION
+Show React, React Native, Realm and Hedera.
+
+MANTHAN STATION
+Show Node.js, enterprise applications and Honda HMSI.
+
+CERTIFICATION STATION
+Keep this visually quieter.
+
+HOVER
+The active station moves toward the camera. Other stations become darker.
+
+SCROLL
+The rail itself moves under the camera. Do not simply translate HTML.
+
+============================================================
+SCENE 04 — NICOBAR FLAGSHIP PROJECT
+============================================================
+
+PURPOSE
+This is the deepest project scene because the resume contains the richest documented system detail here.
+
+PROJECT
+Nicobar E-commerce Platform
+Stack: Node.js, Moleculer, Shopify, GraphQL, AWS SQS, Redis, MongoDB, SOAP/ERP
+
+VISUAL
+Build one enormous physical commerce-processing facility. Do not use a generic dashboard. The facility has clearly separated modules.
+
+MODULES
+STOREFRONT
+ORDER CORE
+EVENT PROCESSING
+ERP
+FULFILLMENT
+RETURNS
+EXCHANGES
+GIFT CARDS
+
+ORDER OBJECT
+One glowing physical order capsule enters from the storefront. The capsule represents an illustrative order event, not a real customer order.
+
+SCROLL STORY
+0–15%: capsule enters checkout.
+15–30%: order core accepts the event.
+30–45%: event-processing rail activates.
+45–60%: ERP gateway activates.
+60–75%: fulfillment route activates.
+75–90%: optional cancellation/return/exchange branches appear.
+90–100%: gift-card synchronization fragment appears before handoff.
+
+DO NOT CLAIM
+Do not claim a specific throughput, order count, revenue number or performance percentage.
+
+============================================================
+SCENE 05 — ORDER CANCELLATION / RETURNS / EXCHANGES
+============================================================
+
+PURPOSE
+Turn the documented workflow responsibilities into a visual state machine.
+
+VISUAL
+A circular mechanical workflow ring. States are physical gates.
+ACTIVE
+CANCELLATION
+RETURN
+EXCHANGE
+FULFILLMENT
+SETTLEMENT
+
+IMPORTANT
+The scene must communicate that these are workflow paths. Do not imply that every order follows every state.
+
+CANCELLATION
+Show customer-initiated and care-initiated labels as two entry paths converging into cancellation processing.
+
+RETURN
+Show eligibility, return acceptance, processing and shipment-status validation as sequential visual checkpoints because these are documented responsibilities.
+
+EXCHANGE
+Show the original order packet entering a replacement path. Do not invent business rules.
+
+GIFT CARD
+Use a small secure chip object. Animate balance, redemption and expiry as documented workflow concepts.
+
+============================================================
+SCENE 06 — SHOPIFY INTEGRATION
+============================================================
+
+PURPOSE
+Show Shopify work as an integration system rather than a logo.
+
+VISUAL
+A large API gateway with two lanes: REST and GRAPHQL. Four side ports represent product, inventory, order and gift-card synchronization.
+
+WEBHOOK FLOW
+Webhook enters.
+Signature verification gate checks it.
+Idempotency gate checks duplicate processing.
+Queue handoff sends the event onward.
+
+HOVER
+Hover REST: REST lane moves forward.
+Hover GraphQL: GraphQL lane moves forward.
+Hover Webhook: verification gate becomes active.
+Hover Idempotency: a duplicate packet appears and is safely blocked.
+
+SCROLL
+Camera follows a webhook from Shopify into internal services.
+
+============================================================
+SCENE 07 — AWS SQS FIFO / RETRIES / DEAD LETTER
+============================================================
+
+PURPOSE
+Make the event-driven processing documented in the resume visually understandable.
+
+VISUAL
+Several transparent physical rails. Each rail contains event capsules.
+
+NORMAL EVENT
+Capsule travels forward in sequence.
+
+DUPLICATE EVENT
+A second capsule with the same illustrative identity reaches the deduplication gate. The gate rejects it.
+
+FAILED EVENT
+Capsule enters a delay chamber.
+It waits.
+It returns to the queue.
+The second attempt takes longer.
+
+DEAD LETTER
+After repeated illustrative failures, the capsule moves to a separate DLQ chamber.
+
+IMPORTANT
+This is a visual demonstration of concepts explicitly present in the resume. Do not present fake production statistics.
+
+============================================================
+SCENE 08 — ERP / SOAP BRIDGE
+============================================================
+
+PURPOSE
+Show enterprise integration.
+
+VISUAL
+Two physical terminals: SHOPIFY/COMMERCE and ERP. A transparent data bridge connects them.
+
+TOOLS
+SOAP UI and Postman appear as small inspection terminals, not giant logos.
+
+FLOW
+Order status packet travels from commerce to ERP.
+Response packet returns.
+Payload inspector scans the message.
+
+ILLUSTRATIVE PAYLOAD
+<Order>
+<Status>
+<Reference>
+</Reference>
+</Status>
+</Order>
+
+Label this as illustrative.
+
+============================================================
+SCENE 09 — DATA LAYER
+============================================================
+
+PURPOSE
+Present database experience in context.
+
+REDIS
+Physical memory wall. Show caching/workflow-state label from the documented Nicobar work.
+
+MONGODB
+Floating document shards. Show transactional and operational data label from Nicobar.
+
+MYSQL
+Relational grid. Associate it visually with HRMS and Zoro.PC.
+
+ORACLEDB
+Large enterprise vault. Associate it visually with Honda HMSI.
+
+Do not invent database architectures that are not documented.
+
+============================================================
+SCENE 10 — PLEXIFY WEALTH APP
+============================================================
+
+PURPOSE
+Change visual language completely. This is a product/mobile scene.
+
+VISUAL
+Large futuristic mobile device. Interface layers float in front of it.
+
+CONTENT
+Insurance
+Bonds
+Property
+User Assets
+Wealth Management
+Will Generation
+Assets
+Liabilities
+
+TECH
+React
+React Native
+Realm
+Hedera blockchain
+
+INTERACTION
+Hover a module and it rises from the device.
+
+SCROLL
+The device rotates. UI layers separate. Blockchain remains a secondary supporting visual.
+
+============================================================
+SCENE 11 — HRMS
+============================================================
+
+PURPOSE
+Show enterprise role-based access.
+
+VISUAL
+A vertical access tower. Levels: Employee, Manager, HR, Admin.
+
+TECH
+MySQL, Node.js, Express, AJAX, jQuery, JavaScript, Bootstrap.
+
+INTERACTION
+Hover a role level. Related route lines illuminate.
+
+SCROLL
+Camera climbs the tower. At the top, the whole hierarchy is visible.
+
+CONTENT
+Role-scoped access control
+95% customization
+Dynamic accessibility for admin login
+Dynamic routing
+Login hierarchy
+
+============================================================
+SCENE 12 — HONDA HMSI
+============================================================
+
+PURPOSE
+Show enterprise hierarchy and business-critical workflow context.
+
+VISUAL
+A large enterprise network with a central application gateway and OracleDB vault.
+
+CONTENT
+Nationwide login hierarchy
+Thousands of users
+Business-critical workflows
+Dynamic routing
+Multi-level login hierarchy
+
+TECH
+OracleDB
+Node.js
+Express
+AJAX
+jQuery
+JavaScript
+Bootstrap
+
+IMPORTANT
+Do not turn the phrase 'thousands of users' into an exact number.
+
+============================================================
+SCENE 13 — ZORO.PC + URBAN-ZORO
+============================================================
+
+PURPOSE
+Show earlier e-commerce projects as visual product showcases.
+
+ZORO.PC
+PC and accessories store.
+Dynamic products.
+Banners.
+Add-to-cart.
+Login hierarchy.
+95% admin-panel customization.
+Stack: MySQL, Node.js, Express, AJAX, jQuery, JavaScript, Bootstrap.
+
+URBAN-ZORO
+Contemporary clothing store for men and women.
+80% admin-panel customization.
+Stack: MongoDB, Node.js, Express, Bootstrap, JavaScript, AJAX.
+
+VISUAL
+Two floating storefront portals. One industrial/electronics. One fashion/editorial.
+
+HOVER
+Project portal moves forward and tilts toward cursor.
+
+SCROLL
+The two portals pass through the camera at different depths.
+
+============================================================
+SCENE 14 — COMPLETE SKILLS MATRIX
+============================================================
+
+PURPOSE
+Show the complete skills list after the visitor has seen evidence of the work.
+
+GROUPS
+BACKEND
+ARCHITECTURE
+E-COMMERCE
+INTEGRATIONS
+CLOUD + MESSAGING
+DATABASES
+FRONTEND
+TOOLS + PRACTICES
+
+VISUAL
+A large suspended matrix. Each skill is a small physical tile. Related tiles are connected with curved lines.
+
+INTERACTION
+Hover a skill. It moves forward and related category members illuminate.
+
+DO NOT
+Claim that every skill is used in every project.
+
+============================================================
+SCENE 15 — PRODUCTION DEBUGGING
+============================================================
+
+PURPOSE
+Show the documented debugging practice.
+
+VISUAL
+Dark control room. One illustrative failed request packet in the center.
+
+FLOW
+REQUEST
+LOG
+QUEUE
+DATABASE
+API PAYLOAD
+SAFEGUARD
+
+IMPORTANT
+Label this as an illustrative debugging flow. Do not claim it represents a specific real production incident.
+
+SCROLL
+Each scroll segment reveals another diagnostic source.
+
+============================================================
+SCENE 16 — EDUCATION
+============================================================
+
+MCA
+Rajdhani College, New Delhi
+Pursuing
+
+FULL-STACK WEB DEVELOPMENT CERTIFICATION
+VSIT.IN, New Delhi
+December 2022 — June 2023
+
+VISUAL
+Minimal floating academic slab. Less motion than project scenes.
+
+============================================================
+SCENE 17 — CONTACT / FINAL CORE
+============================================================
+
+PURPOSE
+End with identity, not effects.
+
+VISUAL
+Return to the hero core. Small fragments from earlier scenes orbit it.
+
+TEXT
+AJIT KUMAR
+SOFTWARE ENGINEER
+BUILDING SCALABLE DIGITAL SYSTEMS
+
+ACTIONS
+LinkedIn
+GitHub
+Email
+
+The actual resume links/contact information should be used exactly as supplied by the user.
+
+SCROLL
+Camera slowly pulls backward.
+No aggressive transition.
+Allow the visitor to remain here.
+
+============================================================
+GLOBAL SCENE IMPLEMENTATION CONTRACT
+============================================================
+
+FOR EVERY SCENE:
+1. Build a scene root.
+2. Define a primary 3D anchor.
+3. Define camera enter position.
+4. Define camera active position.
+5. Define camera exit position.
+6. Define lookAt enter target.
+7. Define lookAt active target.
+8. Define lookAt exit target.
+9. Define primary object idle rotation.
+10. Define primary object scroll rotation.
+11. Define object scale range.
+12. Define object depth range.
+13. Define particle density range.
+14. Define particle velocity range.
+15. Define cursor influence radius.
+16. Define hover response.
+17. Define text entrance progress.
+18. Define text exit progress.
+19. Define transition start progress.
+20. Define transition end progress.
+21. Define mobile simplification.
+22. Define reduced-motion simplification.
+23. Clean up GSAP context.
+24. Clean up ScrollTrigger.
+25. Dispose resources where required.
+
+============================================================
+GLOBAL DESIGN RULES
+============================================================
+
+Cyberpunk must mean architectural futuristic technology, not generic neon wallpaper.
+Use large black surfaces.
+Use controlled emissive accents.
+Use glass sparingly.
+Use reflections carefully.
+Use depth and negative space.
+Use industrial geometry.
+Use data as physical motion.
+Use typography as a visual anchor.
+
+DO NOT make the portfolio feel like:
+a game HUD
+a crypto website
+a sci-fi movie intro
+a space website
+a dashboard template
+a generic agency landing page
+
+MAKE it feel like:
+a premium engineer portfolio
+a digital systems museum
+a cinematic technical story
+a futuristic product studio
+a high-end interactive resume
+
+============================================================
+MASTER TRANSITION MAP
+============================================================
+
+01 CORE → PROFILE RING
+02 PROFILE MODULES → CAREER RAIL
+03 CAREER RAIL → NICOBAR GATE
+04 NICOBAR ORDER → WORKFLOW RING
+05 WORKFLOW RING → SHOPIFY WEBHOOK
+06 WEBHOOK → SQS MESSAGE
+07 SQS MESSAGE → ERP PACKET
+08 ERP PACKET → DATABASE SHARDS
+09 DATABASE SHARDS → MOBILE DEVICE
+10 MOBILE DEVICE → ACCESS GRID
+11 ACCESS GRID → ENTERPRISE NETWORK
+12 ENTERPRISE NETWORK → PROJECT PORTALS
+13 PROJECT PORTALS → SKILLS MATRIX
+14 SKILLS MATRIX → DEBUGGING CORE
+15 DEBUGGING CORE → EDUCATION SLAB
+16 EDUCATION SLAB → FINAL CORE
+17 FINAL CORE → STATIC CONTACT STATE
+
+The important design principle is continuity.
+Every scene must hand something physical to the next scene.
+The visitor should subconsciously feel that every part of the resume is connected.
+
+============================================================
+TECHNICAL BUILD REQUIREMENTS
+============================================================
+
+NEXT.JS APP ROUTER
+Use client components for WebGL and browser interaction.
+Keep static metadata server-renderable when practical.
+
+R3F
+Use Canvas with a controlled camera.
+Use refs for animation targets.
+Use instanced geometry for repeated objects.
+
+GSAP
+Use ScrollTrigger for the master timeline.
+Use gsap.context.
+Kill timelines on cleanup.
+Do not let multiple timelines control the same transform simultaneously.
+
+FRAMER MOTION
+Use for DOM headings, labels, project metadata and contact UI.
+
+GLSL
+Particle shader.
+Transition shader.
+Optional glass distortion shader.
+
+POSTPROCESSING
+Bloom.
+Depth of field.
+Chromatic aberration.
+Subtle noise.
+
+LENIS
+Use smooth scroll.
+Synchronize with GSAP ticker.
+
+PERFORMANCE
+Lazy-load heavy scenes.
+Reduce particles on mobile.
+Reuse geometries/materials.
+Avoid React state updates on every frame.
+Use GPU-friendly buffers.
+Dispose resources.
+
+============================================================
+FINAL ACCEPTANCE TEST
+============================================================
+
+A visitor who knows nothing about Ajit should understand after one pass:
+1. His name and role.
+2. His professional experience.
+3. His strongest current work at Nicobar.
+4. His Shopify/ERP integration work.
+5. His event-driven AWS SQS work.
+6. His Plexify mobile/wealth work.
+7. His HRMS and Honda HMSI work.
+8. His Zoro.PC and Urban-Zoro projects.
+9. His technical stack.
+10. His education.
+11. How to contact him.
+
+A visitor should NOT need to decode the animation to understand the resume.
+The animation enhances the resume.
+The resume controls the animation.
+The 3D experience never invents facts.
+
+END OF MASTER SPECIFICATION
+
+SCENE 01 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / ENTER CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / REVEAL CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / SCROLL CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / PEAK CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / EXIT CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 01 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 01 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / ENTER CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / REVEAL CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / SCROLL CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / PEAK CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / EXIT CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 02 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 02 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / ENTER CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / REVEAL CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / SCROLL CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / PEAK CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / EXIT CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 03 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 03 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / ENTER CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / REVEAL CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / SCROLL CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / PEAK CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / EXIT CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 04 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 04 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / ENTER CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / REVEAL CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / SCROLL CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / PEAK CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / EXIT CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 05 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 05 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / ENTER CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / REVEAL CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / SCROLL CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / PEAK CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / EXIT CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 06 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 06 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / ENTER CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / REVEAL CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / SCROLL CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / PEAK CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / EXIT CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 07 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 07 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / ENTER CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / REVEAL CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / SCROLL CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / PEAK CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / EXIT CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 08 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 08 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / ENTER CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / REVEAL CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / SCROLL CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / PEAK CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / EXIT CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 09 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 09 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / ENTER CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / REVEAL CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / SCROLL CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / PEAK CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / EXIT CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 10 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 10 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / ENTER CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / REVEAL CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / SCROLL CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / PEAK CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / EXIT CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 11 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 11 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / ENTER CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / REVEAL CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / SCROLL CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / PEAK CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / EXIT CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 12 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 12 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / ENTER CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / REVEAL CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / SCROLL CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / PEAK CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / EXIT CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 13 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 13 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / ENTER CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / REVEAL CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / SCROLL CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / PEAK CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / EXIT CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 14 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 14 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / ENTER CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / REVEAL CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / SCROLL CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / PEAK CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / EXIT CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 15 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 15 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / PRELOAD CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / ENTER CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / REVEAL CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / INTERACTIVE CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / SCROLL CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / PEAK CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / EXIT CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.
+- Keep primary object motion smooth and avoid transform conflicts.
+- Keep cursor effects local to the active object.
+- Keep particle effects subordinate to the scene story.
+- If the scene uses illustrative data, label it as illustrative.
+- If reduced motion is enabled, replace large travel with fade/scale/rotation.
+- On exit, hand a recognizable visual anchor to the next scene.
+
+SCENE 16 / CLEANUP CHECKPOINT
+- Load only assets needed for scene 16 and the immediate transition.
+- Keep DOM content readable and aligned with the resume source.
+- Keep camera motion non-linear and deterministic.

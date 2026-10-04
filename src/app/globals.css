@@ -1,26 +1,843 @@
 @import "tailwindcss";
 
+/**
+ * CYBERPUNK 3D PORTFOLIO — THEME
+ *
+ * The palette rule from the brief: neon cyan, acid green, electric violet and a
+ * controlled white. Never a rainbow. Most surfaces are dark and restrained; glow
+ * is reserved for active data, interaction and key edges — which is why the
+ * background is nearly black and the accents are used sparingly, as thin rules,
+ * small labels and hover states rather than as fills.
+ *
+ * Typography: a grotesk for the interface, a mono for the technical register.
+ * Uppercase mono at small sizes for system metadata, large grotesk for headings.
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces — deliberately close together and very dark. */
+  --surface-void: #04060c;
+  --surface-deep: #070b14;
+  --surface-panel: rgba(10, 16, 26, 0.62);
+  --surface-line: rgba(120, 180, 220, 0.16);
+
+  /* Ink */
+  --ink-bright: #eaf6ff;
+  --ink-body: rgba(226, 240, 250, 0.78);
+  --ink-muted: rgba(190, 212, 230, 0.5);
+  --ink-faint: rgba(170, 196, 218, 0.32);
+
+  /* Accents — exactly four. */
+  --accent-cyan: #22e6ff;
+  --accent-green: #9dff4d;
+  --accent-violet: #a06bff;
+  --accent-white: #eaf6ff;
+
+  /* Status colours, used only where status is the meaning. */
+  --status-amber: #ffb347;
+  --status-red: #ff3b5c;
+
+  /* Rhythm. */
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --stack: clamp(0.75rem, 1.6vh, 1.5rem);
+
+  /* Motion. One easing curve for everything. */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration-slow: 520ms;
+
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--surface-void);
+  color: var(--ink-body);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
+
+/* Held while the boot sequence is up, so the visitor cannot scroll before the
+   scroll driver has attached and measured the track. */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+/* Stage — the fixed viewport the 3D layer lives in.                     */
+/* ------------------------------------------------------------------ */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% 8%, rgba(34, 230, 255, 0.06), transparent 62%),
+    radial-gradient(90% 70% at 82% 96%, rgba(160, 107, 255, 0.05), transparent 60%),
+    var(--surface-void);
+}
+
+.scene-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Placeholder holds the same footprint as the canvas, so nothing reflows when
+   the WebGL layer mounts a frame later. */
+.canvas-placeholder {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-void);
+}
+
+/* The scroll surface itself is invisible; only its height matters. */
+.scroll-track {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* 3D-anchored holographic labels (drei Html).                          */
+/* ------------------------------------------------------------------ */
+
+.holo-label {
+  --label-accent: var(--accent-cyan);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  transform: translateZ(0);
+}
+
+.holo-label__text {
+  display: inline-block;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--label-accent);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--label-accent) 45%, transparent);
+  opacity: 0.78;
+}
+
+.holo-label--title .holo-label__text {
+  font-family: var(--font-geist-sans), ui-sans-serif, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  opacity: 0.9;
+}
+
+.holo-label--body .holo-label__text {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Navigation rail.                                                     */
+/* ------------------------------------------------------------------ */
+
+.nav {
+  position: fixed;
+  z-index: 30;
+  top: 50%;
+  right: var(--gutter);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.25rem;
+  pointer-events: none;
+}
+
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+}
+
+.nav__item {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  padding: 0.28rem 0.4rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    gap var(--duration-fast) var(--ease-out);
+}
+
+.nav__title {
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.nav__tick {
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  transition:
+    width var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.nav__item:hover,
+.nav__item:focus-visible {
+  color: var(--accent-cyan);
+  gap: 0.95rem;
+}
+
+.nav__item:hover .nav__title,
+.nav__item:focus-visible .nav__title {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav__item:focus-visible {
+  outline: 1px solid var(--accent-cyan);
+  outline-offset: 3px;
+}
+
+.nav__item.is-current {
+  color: var(--accent-white);
+}
+
+.nav__item.is-current .nav__title {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav__item.is-current .nav__tick {
+  width: 34px;
+  background: var(--accent-cyan);
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(34, 230, 255, 0.7);
+}
+
+.nav__readout {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+}
+
+.nav__readout-value {
+  color: var(--accent-cyan);
+}
+
+/* ------------------------------------------------------------------ */
+/* Chapter copy overlay.                                                */
+/* ------------------------------------------------------------------ */
+
+.chapter-copy {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+}
+
+.chapter-copy__section {
+  max-width: min(34rem, 46vw);
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+  pointer-events: auto;
+}
+
+.chapter-copy__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.chapter-copy__index {
+  color: var(--accent-cyan);
+}
+
+.chapter-copy__rule {
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+}
+
+.chapter-copy__title {
+  margin: 0;
+  font-size: clamp(2rem, 5.2vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink-bright);
+  text-wrap: balance;
+}
+
+.chapter-copy__kicker {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.chapter-copy__lead {
+  margin: 0;
+  max-width: 32rem;
+  font-size: clamp(0.9rem, 1.15vw, 1rem);
+  line-height: 1.65;
+  color: var(--ink-body);
+  text-wrap: pretty;
+}
+
+/* Used when the copy has to say something about the limits of its own content —
+   an honest caption rather than a disclaimer banner. */
+.chapter-copy__note {
+  margin: 0;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--surface-line);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+.identity {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  color: var(--ink-bright);
+}
+
+.identity__role {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(0.72rem, 1.4vw, 0.9rem);
+  letter-spacing: 0.34em;
+  color: var(--accent-cyan);
+}
+
+.identity__tagline,
+.identity__years {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Technical label groups.                                              */
+/* ------------------------------------------------------------------ */
+
+.labels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.labels__item {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-body);
+  padding: 0.28rem 0.6rem;
+  border: 1px solid var(--surface-line);
+  border-radius: 2px;
+  background: var(--surface-panel);
+  backdrop-filter: blur(6px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Employment timeline.                                                 */
+/* ------------------------------------------------------------------ */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--surface-line);
+}
+
+.timeline__row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.15rem 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--surface-line);
+}
+
+.timeline__period {
+  grid-row: span 2;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  padding-top: 0.15rem;
+}
+
+.timeline__company {
+  font-size: 0.92rem;
+  color: var(--ink-bright);
+}
+
+.timeline__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing:0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.timeline__current {
+  font-size: 9px;
+  padding: 0.1rem 0.4rem;
+  color: var(--accent-green);
+  border: 1px solid color-mix(in srgb, var(--accent-green) 40%, transparent);
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Project lists.                                                       */
+/* ------------------------------------------------------------------ */
+
+.projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: min(46vh, 26rem);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-line) transparent;
+}
+
+.projects__item {
+  border: 1px solid var(--surface-line);
+  border-radius: 3px;
+  background: var(--surface-panel);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.projects__item:has(a:hover),
+.projects__item:has(a:focus-visible) {
+  border-color: color-mix(in srgb, var(--accent-green) 55%, transparent);
+  transform: translateX(3px);
+}
+
+.projects__link {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.8rem 0.95rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.projects__name {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ink-bright);
+}
+
+.projects__stack {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.projects__description {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.projects__cta {
+  margin-top: 0.2rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+/* ------------------------------------------------------------------ */
+/* Contact actions.                                                     */
+/* ------------------------------------------------------------------ */
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.contact__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid color-mix(in srgb, var(--accent-cyan) 45%, transparent);
+  border-radius: 2px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-bright);
+  text-decoration: none;
+  background: rgba(34, 230, 255, 0.05);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.contact__action:hover,
+.contact__action:focus-visible {
+  background: rgba(34, 230, 255, 0.14);
+  box-shadow: 0 0 24px rgba(34, 230, 255, 0.28);
+}
+
+.contact__action:focus-visible {
+  outline: 1px solid var(--accent-cyan);
+  outline-offset: 3px;
+}
+
+/* Honest about state: these render as labels, not links, because the resume
+   supplied the channel names but no URLs. */
+.contact__action--disabled {
+  border-style: dashed;
+  border-color: var(--surface-line);
+  background: none;
+  color: var(--ink-faint);
+  cursor: default;
+}
+
+/* ------------------------------------------------------------------ */
+/* Cursor.                                                              */
+/* ------------------------------------------------------------------ */
+
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+}
+
+.cursor__ring {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent-cyan) 60%, transparent);
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+/* ------------------------------------------------------------------ */
+/* Loader.                                                              */
+/* ------------------------------------------------------------------ */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--surface-void);
+}
+
+.loader__name {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-bright);
+}
+
+.loader__line {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: var(--accent-cyan);
+}
+
+.loader__bar {
+  width: min(18rem, 60vw);
+  height: 1px;
+  background: var(--surface-line);
+  overflow: hidden;
+}
+
+.loader__bar-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+}
+
+/* ------------------------------------------------------------------ */
+/* No-WebGL fallback.                                                   */
+/* ------------------------------------------------------------------ */
+
+.fallback {
+  position: relative;
+  z-index: 10;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 10vh, 8rem) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 8vh, 5rem);
+}
+
+.fallback__notice {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--surface-line);
+  border-radius: 3px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.fallback__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--surface-line);
+}
+
+.fallback__eyebrow {
+  margin: 0;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.fallback__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-bright);
+}
+
+.fallback__intent {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities.                                                           */
+/* ------------------------------------------------------------------ */
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  /* The nav rail is pointer-events: none, so the link has to opt back in or it
+     would be unclickable. */
+  pointer-events: auto;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--accent-cyan);
+  border-radius: 2px;
+  background: var(--surface-deep);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-bright);
+  text-decoration: none;
+  transition: top var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  top: var(--gutter);
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive.                                                          */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .chapter-copy__section {
+    max-width: min(32rem, 62vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    top: auto;
+    bottom: var(--gutter);
+    right: var(--gutter);
+    left: var(--gutter);
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  /* On a phone the rail becomes a compact strip of ticks; the titles would
+     never fit and never be read. */
+  .nav__title {
+    display: none;
+  }
+
+  .nav__item {
+    padding: 0.3rem;
+  }
+
+  .nav__tick {
+    width: 12px;
+  }
+
+  .nav__item.is-current .nav__tick {
+    width: 20px;
+  }
+
+  .chapter-copy {
+    align-items: flex-end;
+    padding-bottom: 5rem;
+  }
+
+  .chapter-copy__section {
+    max-width: none;
+  }
+
+  .projects {
+    max-height: 32vh;
+  }
+
+  .cursor {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion.                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The loader bar is a progress indicator, not decoration, so it keeps moving
+     at a rate a reduced-motion user can still perceive as progress. */
+  .loader__bar-fill {
+    transition-duration: 400ms !important;
+  }
+}

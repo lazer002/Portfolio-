@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "smoke": "node scripts/smoke.mjs",
+    "perf": "node scripts/perf.mjs",
+    "visibility": "node scripts/visibility.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
